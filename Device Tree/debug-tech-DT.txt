@@ -1,0 +1,32 @@
+SHELL SCRIPT
+// convert nguoc tu dtb ->> dts
+dtc -I dtb -O dts am335x-boneblack.dtb | tee am335x-boneblackconvert.dts
+
+
+// xem trang thai hien tai cua cac pins rồi xem trong RM Spruh73 trang 9, Control module -> registers 
+
+sudo cat /sys/kernel/debug/pinctrl/44e10800.pinmux-pinctrl-single/pins 
+
+
+
+// Khi mà viết 1 device tree cho 1 module đặc biệt thì vào trang linux kernel bootlin xem mục Documen/devicetree/binding xem cách viết cú pháp chuẩn 
+hoặc là grep - nr trên máy ảo cài BSP cái properties mình không biết
+
+https://elixir.bootlin.com/linux/latest/source/Documentation/devicetree/bindings
+
+
+// Khi muốn xem mình sửa đúng chưa thì mình có thể kiểm tra(linux có hỗ trợ xem DT)
+cd /proc/device-tree/
+
+CÁC BƯỚC CƠ BẢN
+
+BƯỚC 1 KIỂM TRA SYNTAX
+- CÚ PHÁP CHUẨN
+- CÚ PHÁP ĐẶC BIỆT CHO TỪNG LOẠI DEVICE
+
+BƯỚC 2 TÊN FILE DEVICE TREE CHO BOARD
+- THƯỜNG ĐẶT TÊN THEO BOARD
+- QUYÉT ĐỊNH BIẾN MÔI TRƯỜNG UBOOT
+
+BƯỚC 3 DEBUG TRONG HÀM PROBE
+- KIỂM TRA PROBE XEM CÓ RETURN SUCCESS KHÔNG
