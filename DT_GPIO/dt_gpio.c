@@ -17,9 +17,8 @@
 #define HIGH    1
 
 /*****************************************************************************************************
- *************************** _PROTOTYPE_FUNCTION_ ****************************************************
- *****************************************************************************************************
-*/
+************************************ _PROTOTYPE_FUNCTION_ ********************************************
+*****************************************************************************************************/
 static int device_open(struct inode *device_file, struct file *instance);
 static int device_close(struct inode *device_file, struct file *instance);
 static ssize_t device_write(struct file *File, const char *user_buffer, size_t count, loff_t *offs);
@@ -34,23 +33,27 @@ static struct file_operations fops = {
 	.release    = device_close
 };
 
+// Struct use to register device file after match with DT
 struct miscdevice led = {
     .minor  = MISC_DYNAMIC_MINOR,
     .name   = "led",
     .fops   = &fops,
 };
 
-static int device_open(struct inode *device_file, struct file *instance) {
+static int device_open(struct inode *device_file, struct file *instance) 
+{
 	printk("open was called!\n");
 	return 0;
 }
 
-static int device_close(struct inode *device_file, struct file *instance) {
+static int device_close(struct inode *device_file, struct file *instance) 
+{
 	printk("close was called!\n");
 	return 0;
 }
 
-static ssize_t device_write(struct file *File, const char *user_buffer, size_t count, loff_t *offs) {
+static ssize_t device_write(struct file *File, const char *user_buffer, size_t count, loff_t *offs) 
+{
     char value = 0;
 
     printk("write was called!\n");
@@ -80,25 +83,33 @@ static int my_pdrv_probe(struct platform_device *pdev)
 {
     int ret = 0;
     struct device *dev = &pdev->dev;
+
+    // Config LED ON after math with DT
     gpio0_30 = gpiod_get(dev, "led", GPIOD_OUT_LOW);
     gpiod_set_value(gpio0_30, HIGH);
 
+    // create character device file 
     ret = misc_register(&led);
     if(ret)
     {
         pr_err("can't misc_register\n");
         return -1;
     }
+    // log announce probe successfully!!
     pr_info("%s - %d", __func__, __LINE__);
     return 0;
 }
 
 static int my_pdrv_remove(struct platform_device *pdev)
 {
+    // Config LED OFF
     gpiod_set_value(gpio0_30, LOW);
     gpiod_put(gpio0_30);
 
+    // free character device file
     misc_deregister(&led);
+
+    // log announce remove successfully!!
     pr_info("%s - %d", __func__, __LINE__);
     return 0;
 }
@@ -118,7 +129,9 @@ static struct platform_driver mypdrv = {
     }
 };
 
+// register platform_driver
 module_platform_driver(mypdrv);
+// register match with Device tree
 MODULE_DEVICE_TABLE(of, gpio_dt_ids);
 
 MODULE_LICENSE("GPL");
