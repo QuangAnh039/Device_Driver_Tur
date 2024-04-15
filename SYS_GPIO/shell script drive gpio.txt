@@ -1,0 +1,7 @@
+echo 30 > /sys/class/gpio/export  //export gpio0[30] len tang user space de su dung
+
+echo out > /sys/class/gpio/gpio30/direction	// OUTPUT OR INPUT
+
+echo 1 > /sys/class/gpio/gpio30/value	// LED ON
+
+echo 0 > /sys/class/gpio/gpio30/value	// LED OFF
