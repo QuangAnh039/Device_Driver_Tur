@@ -1,0 +1,5 @@
+s /sys/class/pwm/pwmchip0
+echo 0 > /sys/class/pwm/pwmchip0/export
+echo 100 > /sys/class/pwm/pwmchip0/pwm0/period
+echo 50 > /sys/class/pwm/pwmchip0/pwm0/duty_cycle
+echo 1 > /sys/class/pwm/pwmchip0/pwm0/enable

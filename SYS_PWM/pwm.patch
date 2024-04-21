@@ -1,0 +1,20 @@
+&am33xx_pinmux {
+	pwm1_pin: pwm1_pin {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A2, PIN_OUTPUT, MUX_MODE6)
+			AM33XX_PADCONF(AM335X_PIN_GPMC_A3, PIN_OUTPUT, MUX_MODE6)
+		>;
+	};
+};
+
+&epwmss1
+{
+	status = "okay";
+};
+
+&ehrpwm1
+{
+	pinctrl-names = "default";
+	pinctrl-0 = <&pwm1_pin>;
+	status = "okay";
+};
