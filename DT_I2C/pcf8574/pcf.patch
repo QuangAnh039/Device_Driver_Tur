@@ -1,0 +1,8 @@
+&i2c2 {
+	status = "okay";
+	pcf: pcf@27 {
+		compatible = "pcf8574";
+		reg = <0x27>;
+		status = "okay";
+	};
+};
