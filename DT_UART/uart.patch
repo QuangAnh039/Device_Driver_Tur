@@ -1,0 +1,18 @@
+&am33xx_pinmux {
+	uart1_pin: uart1_pin {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_UART1_TXD, PIN_OUTPUT_PULLDOWN, MUX_MODE0)
+			AM33XX_PADCONF(AM335X_PIN_UART1_RXD, PIN_INPUT_PULLUP, MUX_MODE0)
+		>;
+	};
+};
+&uart1
+{
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart1_pin>;
+	status = "okay";
+	serial-demo
+	{
+		compatible = "serial-user-demo";
+	};
+};
