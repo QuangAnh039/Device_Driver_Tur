@@ -1,0 +1,27 @@
+&am33xx_pinmux {
+	spi1_pin: spi1_pin {
+		pinctrl-single,pins = <
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_FSX, PIN_OUTPUT_PULLUP, MUX_MODE3)
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AHCLKR, PIN_OUTPUT_PULLUP, MUX_MODE3)
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_AXR0, PIN_OUTPUT_PULLUP, MUX_MODE3)
+			AM33XX_PADCONF(AM335X_PIN_MCASP0_ACLKX, PIN_OUTPUT_PULLUP, MUX_MODE3)
+		>;
+	};
+};
+
+&spi1
+{
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pin>;
+	cs-gpios = <&gpio3 17 1>, <&gpio0 7 1>;
+	#address-cells = <1>;
+	#size-cells = <0>;
+	my_adc: my_adc@0 {
+				compatible = "logicanalyzer,myadc";
+				reg = <0x0>;
+				spi-max-frequency = <4000>;
+				//spi-bits-per-word = <8>;
+				status = "okay";
+			};
+};
