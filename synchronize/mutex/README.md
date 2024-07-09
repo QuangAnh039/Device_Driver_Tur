@@ -1,0 +1,1 @@
+In the Mutex concept, when the thread is trying to lock or acquire the Mutex which is not available then that thread will go to sleep until that Mutex is available
